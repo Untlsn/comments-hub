@@ -17,6 +17,11 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
   const [willDelete, setWillDelete] = createSignal(false);
   const [text, setText] = createSignal(props.text);
 
+  const submit = () => {
+    props.onEdit?.(text());
+    setIsEditMode(false);
+  }
+
   return (
     <div class='flex gap-8 bg-white p-8 rounded-xl w-full'>
       <div>
@@ -47,16 +52,16 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
               <textarea
                 class='w-full h-30 text-xl text-main-grayish resize-none border-1 p-2 rounded hocus:border-black'
                 value={text()}
-                onKeyUp={(ev) => setText(ev.currentTarget.value)}
+                onKeyUp={(ev) => {
+                  if (ev.key == 'Enter') submit();
+                  else setText(ev.currentTarget.value);
+                }}
               />
               <p class='flex justify-end'>
                 <button
                   type='submit'
                   class='uppercase py-4 px-8 font-bold bg-main-blue text-white rounded-lg hover:bg-opacity-30'
-                  onClick={() => {
-                    props.onEdit?.(text());
-                    setIsEditMode(false);
-                  }}
+                  onClick={submit}
                 >
                   Update
                 </button>
