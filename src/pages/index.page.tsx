@@ -85,6 +85,7 @@ export const Page = (props: PageProps) => {
                         image: subComment.user.image.webp,
                         nick: subComment.user.username,
                         daysAgo: subComment.createdAt,
+                        replyOf: comment.user.username,
                       }
 
                       return (
