@@ -3,6 +3,7 @@ import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr'
 import { PageContext } from './types'
 import logoUrl from './logo.svg'
 import 'virtual:windi.css';
+import '$/assets/style/root.css';
 
 
 export { render }

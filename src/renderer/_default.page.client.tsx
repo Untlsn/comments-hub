@@ -1,6 +1,7 @@
 import { hydrate, render } from 'solid-js/web'
 import { useClientRouter } from 'vite-plugin-ssr/client/router'
 import 'virtual:windi.css';
+import '$/assets/style/root.css';
 import 'virtual:windi-devtools';
 
 

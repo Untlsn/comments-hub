@@ -9,7 +9,11 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "rootDir": ".",
+    "paths": {
+      "$/*": ["./src/*"]
+    }
   },
   "ts-node": {
     "transpileOnly": true,
