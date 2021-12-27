@@ -8,13 +8,13 @@ interface CommentBoxProps extends CommentHeaderProps {
 
 const CommentBox = (props: CommentBoxProps) => {
   return (
-    <div class='flex gap-8 bg-white p-8 rounded-xl max-w-250'>
+    <div class='flex gap-8 bg-white p-8 rounded-xl w-full'>
       <div>
         <ScoreCount score={props.score} />
       </div>
       <article class='space-y-8'>
         <CommentHeader {...props} />
-        <p class='text-xl text-main-grayish'>{props.text}</p>
+        <p class='text-xl text-main-grayish break-all'>{props.text}</p>
       </article>
     </div>
   );

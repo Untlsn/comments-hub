@@ -1,4 +1,4 @@
-import { createMemo, JSX, splitProps } from 'solid-js';
+import { createMemo, JSX, splitProps, Show } from 'solid-js';
 
 interface AgoCounterProps extends JSX.HTMLAttributes<HTMLSpanElement> {
   days: number
@@ -35,7 +35,11 @@ const AgoCounter = (_props: AgoCounterProps) => {
 
   return (
     <span {...defaultForWrapper}>
-      {`${afterCalc().value} ${afterCalc().type}${afterCalc().value > 1 ? 's' : ''} ago`}
+      <Show
+        when={props.days == 0}
+        children='today'
+        fallback={`${afterCalc().value} ${afterCalc().type}${afterCalc().value > 1 ? 's' : ''} ago`}
+      />
     </span>
   );
 };

@@ -15,7 +15,7 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
   const [text, setText] = createSignal(props.text);
 
   return (
-    <div class='flex gap-8 bg-white p-8 rounded-xl max-w-250'>
+    <div class='flex gap-8 bg-white p-8 rounded-xl w-full'>
       <div>
         <ScoreCount score={props.score} />
       </div>
@@ -43,7 +43,7 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
             value={text()}
             onKeyUp={(ev) => setText(ev.currentTarget.value)}
           />}
-          fallback={<p class='text-xl text-main-grayish'>{text()}</p>}
+          fallback={<p class='text-xl text-main-grayish break-all'>{text()}</p>}
         />
       </article>
     </div>
