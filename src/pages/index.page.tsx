@@ -1,4 +1,4 @@
-import { createContext, createEffect, For, Show } from 'solid-js';
+import { createContext, For, Show } from 'solid-js';
 import CommentBox from '$/components/organisms/CommentBox';
 import YouCommentBox from '$/components/organisms/YouCommentBox';
 import { createStore, SetStoreFunction, Store } from 'solid-js/store';
@@ -44,35 +44,35 @@ export const StoreContext = createContext<[get: Store<PageProps>, set: SetStoreF
 export const Page = (props: PageProps) => {
   const [store, setStore] = createStore({ ...props });
 
-  createEffect(() => {
-    store.comments;
-    console.log('store change');
-  })
-
   return (
     <StoreProvider value={[store, setStore]}>
       <main class='flex justify-center text-background-blue-dark bg-background-blue-light'>
         <div class='min-h-screen space-y-8 py-8 max-w-250 w-screen'>
           <For each={store.comments}>{(comment, i) => {
-            const boxProps = {
+            const boxProps = () => ({
               score: comment.score,
               text: comment.content,
               image: comment.user.image.webp,
               nick: comment.user.username,
               daysAgo: comment.createdAt,
               id: comment.id
-            }
+            })
 
             return (
               <div>
                 <Show
                   when={comment.user.username == props.currentUser.username}
-                  children={<YouCommentBox {...boxProps} onDelete={() => {
+                  children={<YouCommentBox {...boxProps()} onDelete={() => {
                     setStore('comments', prev => prev.filter(com => com.id != comment.id))
-                  }}
-                  />}
-                  fallback={<CommentBox {...boxProps} onComment={(newComment) => {
+                  }} onEdit={(text) => {
+                    setStore('comments', i(), 'content', text)
+                  }} onScoreChange={(score) => {
+                    setStore('comments', i(), 'score', score)
+                  }} />}
+                  fallback={<CommentBox {...boxProps()} onComment={(newComment) => {
                     setStore('comments', i(), 'replies', prev => [...prev, newComment])
+                  }} onScoreChange={(score) => {
+                    setStore('comments', i(), 'score', score)
                   }} />}
                 />
 
@@ -83,7 +83,7 @@ export const Page = (props: PageProps) => {
                     </div>
                     <div class='space-y-4 flex-1'>
                       <For each={comment.replies}>{(subComment) => {
-                        const boxProps = {
+                        const boxProps = () => ({
                           score: subComment.score,
                           text: subComment.content,
                           image: subComment.user.image.webp,
@@ -91,16 +91,20 @@ export const Page = (props: PageProps) => {
                           daysAgo: subComment.createdAt,
                           replyingTo: subComment.replyingTo,
                           id: subComment.id
-                        }
+                        })
 
                         return (
                           <Show
                             when={subComment.user.username == props.currentUser.username}
-                            children={<YouCommentBox {...boxProps} onDelete={() => {
+                            children={<YouCommentBox {...boxProps()} onDelete={() => {
                               setStore('comments', com => com.id == comment.id, 'replies', rep => rep.filter(com => com.id != subComment.id))
+                            }} onScoreChange={(score) => {
+                              setStore('comments', com => com.id == comment.id, 'replies', com => com.id == subComment.id, 'score', score)
                             }} />}
-                            fallback={<CommentBox {...boxProps} onComment={(newComment) => {
+                            fallback={<CommentBox {...boxProps()} onComment={(newComment) => {
                               setStore('comments', i(), 'replies', prev => [...prev, newComment])
+                            }} onScoreChange={(score) => {
+                              setStore('comments', com => com.id == comment.id, 'replies', com => com.id == subComment.id, 'score', score)
                             }} />}
                           />
                         )

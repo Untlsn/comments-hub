@@ -12,6 +12,7 @@ interface CommentBoxProps extends CommentHeaderProps {
   replyingTo?: string
   id: string
   onComment?(comment: RepliesComment): void
+  onScoreChange?(score: number): void
 }
 
 const CommentBox = (props: CommentBoxProps) => {
@@ -24,7 +25,7 @@ const CommentBox = (props: CommentBoxProps) => {
     <>
       <div class='flex gap-8 bg-white p-8 rounded-xl w-full'>
         <div>
-          <ScoreCount score={props.score} />
+          <ScoreCount score={props.score} onChange={props.onScoreChange} />
         </div>
         <article class='space-y-8'>
           <CommentHeader {...props} onReply={() => setIsReplayMode(v => !v)} />
@@ -40,7 +41,6 @@ const CommentBox = (props: CommentBoxProps) => {
           image={store.currentUser.image.webp}
           buttonText='reply'
           onSend={(text) => {
-            console.log(props.nick);
             setIsReplayMode(false);
             props.onComment?.({
               id: nanoid(8),

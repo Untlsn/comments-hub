@@ -1,6 +1,6 @@
 import Plus from '$/components/svg/Plus';
 import Minus from '$/components/svg/Minus';
-import { createEffect, createSignal } from 'solid-js';
+import { createSignal } from 'solid-js';
 
 interface ScoreCountProps {
   score: number
@@ -11,48 +11,55 @@ const buttonStyle = 'h-10 w-12 flex items-center justify-center text-[#C5C6EF] h
 
 const ScoreCount = (props: ScoreCountProps) => {
   const [score, setScore] = createSignal(props.score);
-  const [changeData, setChangeData] = createSignal({
-    bef: 0,
-    cur: 0,
-  });
-
-  createEffect(() => {
-    // If one button is clicked 2 times
-    if (changeData().bef && changeData().bef == changeData().cur) {
-      if (changeData().cur == 1) {
-        setScore(props.score);
-      }
-      else if (changeData().cur == -1) {
-        setScore(props.score)
-      }
-    } else {
-      props.onChange?.(score());
-    }
-  })
+  const [changeVersion, setChangeVersion] = createSignal(0);
 
   return (
     <div class='text-center font-bold bg-background-blue-light rounded-xl text-lg'>
       <button
-        class={`${buttonStyle} ${score() > props.score ? 'text-background-blue-dark' : ''}`}
+        class={`${buttonStyle} ${changeVersion() == 1 ? 'text-background-blue-dark' : ''}`}
         onClick={() => {
-          setScore(props.score + 1)
-          setChangeData(prev => ({
-            bef: prev.cur,
-            cur: 1,
-          }))
+          switch (changeVersion()) {
+            case 1: {
+              setScore(v => v - 1);
+              setChangeVersion(0);
+              break;
+            }
+            case 0: {
+              setScore(v => v + 1);
+              setChangeVersion(1);
+              break;
+            }
+            case -1: {
+              setScore(v => v + 2);
+              setChangeVersion(1);
+              break;
+            }
+          }
         }}
       >
         <Plus />
       </button>
       {score()}
       <button
-        class={`${buttonStyle} ${score() < props.score ? 'text-background-blue-dark' : ''}`}
+        class={`${buttonStyle} ${changeVersion() == -1 ? 'text-background-blue-dark' : ''}`}
         onClick={() => {
-          setScore(props.score - 1)
-          setChangeData(prev => ({
-            bef: prev.cur,
-            cur: -1,
-          }))
+          switch (changeVersion()) {
+            case 1: {
+              setScore(v => v - 2);
+              setChangeVersion(-1);
+              break;
+            }
+            case 0: {
+              setScore(v => v - 1);
+              setChangeVersion(-1);
+              break;
+            }
+            case -1: {
+              setScore(v => v + 1);
+              setChangeVersion(0);
+              break;
+            }
+          }
         }}
       >
         <Minus />

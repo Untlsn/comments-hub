@@ -30,7 +30,7 @@ const YouCommentHeader = (props: YouCommentHeaderProps) => {
       </button>
       <button
         onClick={props.onEdit} class='flex items-center gap-4 text-main-blue hover:text-opacity-20'>
-        <Edit /> <Show when={props.isEditMode} children='Submit' fallback='Edit' />
+        <Edit /> <Show when={props.isEditMode} children='Cancel' fallback='Edit' />
       </button>
     </h1>
   );

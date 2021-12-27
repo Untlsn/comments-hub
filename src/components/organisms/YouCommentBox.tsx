@@ -8,6 +8,8 @@ interface YouCommentBoxProps extends CommentHeaderProps {
   text: string
   replyingTo?: string
   onDelete?(): void
+  onEdit?(text: string): void
+  onScoreChange?(score: number): void
 }
 
 const YouCommentBox = (props: YouCommentBoxProps) => {
@@ -18,7 +20,7 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
   return (
     <div class='flex gap-8 bg-white p-8 rounded-xl w-full'>
       <div>
-        <ScoreCount score={props.score} />
+        <ScoreCount score={props.score} onChange={props.onScoreChange} />
       </div>
       <article class='space-y-8 w-full'>
         <YouCommentHeader
@@ -26,6 +28,7 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
           onEdit={() => {
             setIsEditMode(v => !v)
             setWillDelete(false);
+            setText(props.text);
           }}
           isEditMode={isEditMode()}
           onDelete={() => {
@@ -39,16 +42,34 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
         />
         <Show
           when={isEditMode()}
-          children={<textarea
-            class='w-full h-30 text-xl text-main-grayish resize-none border-1 p-2 rounded hocus:border-black'
-            value={text()}
-            onKeyUp={(ev) => setText(ev.currentTarget.value)}
-          />}
-          fallback={<p class='text-xl text-main-grayish break-all'>
-            <Show when={props.replyingTo}>
-              <span class='text-main-blue'>@{props.replyingTo}</span>
-            </Show> {text()}
-        </p>}
+          children={(
+            <div class='space-y-2'>
+              <textarea
+                class='w-full h-30 text-xl text-main-grayish resize-none border-1 p-2 rounded hocus:border-black'
+                value={text()}
+                onKeyUp={(ev) => setText(ev.currentTarget.value)}
+              />
+              <p class='flex justify-end'>
+                <button
+                  type='submit'
+                  class='uppercase py-4 px-8 font-bold bg-main-blue text-white rounded-lg hover:bg-opacity-30'
+                  onClick={() => {
+                    props.onEdit?.(text());
+                    setIsEditMode(false);
+                  }}
+                >
+                  Update
+                </button>
+              </p>
+            </div>
+          )}
+          fallback={(
+            <p class='text-xl text-main-grayish break-all'>
+              <Show when={props.replyingTo}>
+                <span class='text-main-blue'>@{props.replyingTo}</span>
+              </Show> {props.text}
+            </p>
+          )}
         />
       </article>
     </div>
