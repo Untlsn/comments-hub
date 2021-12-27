@@ -42,7 +42,7 @@ export const StoreContext = createContext<[get: Store<PageProps>, set: SetStoreF
 
 
 export const Page = (props: PageProps) => {
-  const [store, setStore] = createStore(props);
+  const [store, setStore] = createStore({ ...props });
 
   createEffect(() => {
     store.comments;
@@ -81,7 +81,7 @@ export const Page = (props: PageProps) => {
                     <div>
                       <hr class='flex-1 h-full w-[2px] my-4 mx-12 bg-black bg-opacity-5'/>
                     </div>
-                    <div class='space-y-4'>
+                    <div class='space-y-4 flex-1'>
                       <For each={comment.replies}>{(subComment) => {
                         const boxProps = {
                           score: subComment.score,

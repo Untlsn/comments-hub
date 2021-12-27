@@ -40,7 +40,7 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
         <Show
           when={isEditMode()}
           children={<textarea
-            class='w-full h-30 text-xl text-main-grayish resize-none border-1 p-2 rounded'
+            class='w-full h-30 text-xl text-main-grayish resize-none border-1 p-2 rounded hocus:border-black'
             value={text()}
             onKeyUp={(ev) => setText(ev.currentTarget.value)}
           />}

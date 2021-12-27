@@ -17,7 +17,7 @@ const CommentHeader = (props: CommentHeaderProps) => {
       <p class='flex-1 text-main-grayish'>
         <AgoCounter days={props.daysAgo} />
       </p>
-      <button onClick={props.onReply} class='text-main-blue flex items-center gap-4'>
+      <button onClick={props.onReply} class='text-main-blue flex items-center gap-4 hover:text-opacity-20'>
         <Reply /> Reply
       </button>
     </h1>

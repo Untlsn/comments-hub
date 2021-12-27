@@ -25,11 +25,11 @@ const YouCommentHeader = (props: YouCommentHeaderProps) => {
         <AgoCounter days={props.daysAgo} />
       </p>
       <button
-        onClick={props.onDelete} class='flex items-center gap-4 text-main-red'>
+        onClick={props.onDelete} class='flex items-center gap-4 text-main-red hover:text-opacity-20'>
         <Delete /> <Show when={props.willDelete} children='Sure?' fallback='Delete' />
       </button>
       <button
-        onClick={props.onEdit} class='flex items-center gap-4 text-main-blue'>
+        onClick={props.onEdit} class='flex items-center gap-4 text-main-blue hover:text-opacity-20'>
         <Edit /> <Show when={props.isEditMode} children='Submit' fallback='Edit' />
       </button>
     </h1>

@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@types/express': ^4.17.12
   '@types/node': ^15.12.1
+  '@windicss/plugin-interaction-variants': ^1.0.0
   autoprefixer: ^10.4.0
   axios: ^0.24.0
   cross-env: ^7.0.3
@@ -23,6 +24,7 @@ specifiers:
 dependencies:
   '@types/express': 4.17.13
   '@types/node': 15.14.9
+  '@windicss/plugin-interaction-variants': 1.0.0
   autoprefixer: 10.4.0_postcss@8.4.5
   axios: 0.24.0
   cross-env: 7.0.3
@@ -446,6 +448,10 @@ packages:
       windicss: 3.4.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@windicss/plugin-interaction-variants/1.0.0:
+    resolution: {integrity: sha512-jk0kvJEwphPlzjgCASxi0yCrLIrMPBHKTjPB1vF2LZsmWVaIPhKQRfpJW6+G093ipDos1E2BkevDrh/R2Ln8gg==}
     dev: false
 
   /@windicss/plugin-utils/1.6.1:
