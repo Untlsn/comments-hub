@@ -6,11 +6,10 @@ export interface CommentHeaderProps {
   nick: string
   // Automatically converted into weeks, months and years
   daysAgo: number
+  onReply?(): void
 }
 
 const CommentHeader = (props: CommentHeaderProps) => {
-
-
   return (
     <h1 class='flex items-center gap-6 text-xl w-full'>
       <img src={props.image} alt="user image" class='h-12'/>
@@ -18,7 +17,7 @@ const CommentHeader = (props: CommentHeaderProps) => {
       <p class='flex-1 text-main-grayish'>
         <AgoCounter days={props.daysAgo} />
       </p>
-      <button class='text-main-blue flex items-center gap-4'>
+      <button onClick={props.onReply} class='text-main-blue flex items-center gap-4'>
         <Reply /> Reply
       </button>
     </h1>

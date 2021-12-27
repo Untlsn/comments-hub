@@ -6,7 +6,7 @@ import { CommentHeaderProps } from '$/components/molecules/CommentHeader';
 interface YouCommentBoxProps extends CommentHeaderProps {
   score: number
   text: string
-  replyOf?: string
+  replyingTo?: string
   onDelete?(): void
 }
 
@@ -45,8 +45,8 @@ const YouCommentBox = (props: YouCommentBoxProps) => {
             onKeyUp={(ev) => setText(ev.currentTarget.value)}
           />}
           fallback={<p class='text-xl text-main-grayish break-all'>
-            <Show when={props.replyOf}>
-              <span class='text-main-blue'>@{props.replyOf}</span>
+            <Show when={props.replyingTo}>
+              <span class='text-main-blue'>@{props.replyingTo}</span>
             </Show> {text()}
         </p>}
         />
