@@ -1,0 +1,31 @@
+{
+  "name": "solid-ts-windi-ssr-template",
+  "version": "0.0.0",
+  "description": "Simple Solid template supporting TypeScript, WindiCSS powered by Vite with SSR plugin.",
+  "scripts": {
+    "dev": "ts-node src/server",
+    "prod": "npm run build && npm run server:prod",
+    "prod:ssg": "npm run build:ssg && npm run server:prod",
+    "build": "vite build && vite build --ssr",
+    "build:ssg": "vite build && vite build --ssr && vite-plugin-ssr prerender",
+    "server:prod": "cross-env NODE_ENV=production ts-node src/server",
+    "prerender": "vite-plugin-ssr prerender"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.12",
+    "@types/node": "^15.12.1",
+    "autoprefixer": "^10.4.0",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "postcss": "^8.4.5",
+    "solid-js": "^1.1.0",
+    "tailwindcss": "^3.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.3.2",
+    "vite": "^2.7.2",
+    "vite-plugin-solid": "^2.0.1",
+    "vite-plugin-ssr": "0.3.41",
+    "vite-plugin-windicss": "^1.6.1",
+    "windicss": "^3.4.0"
+  }
+}
