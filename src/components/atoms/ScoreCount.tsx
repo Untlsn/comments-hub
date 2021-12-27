@@ -7,25 +7,56 @@ interface ScoreCountProps {
   onChange?(score: number): void
 }
 
-const buttonStyle = 'h-10 w-10 flex items-center justify-center text-[#C5C6EF] hover:text-background-blue-dark'
+const buttonStyle = 'h-10 w-12 flex items-center justify-center text-[#C5C6EF] hover:text-background-blue-dark'
 
 const ScoreCount = (props: ScoreCountProps) => {
   const [score, setScore] = createSignal(props.score);
+  const [changeData, setChangeData] = createSignal({
+    bef: 0,
+    cur: 0,
+  });
 
   createEffect(() => {
-    // on second click on same button, score will reset
-    if (score() > props.score + 1 || score() < props.score - 1) setScore(props.score);
-    // prevent from returning score + 2 or score - 2
-    else props.onChange?.(score());
+    // If one button is clicked 2 times
+    if (changeData().bef && changeData().bef == changeData().cur) {
+      if (changeData().cur == 1) {
+        setScore(props.score);
+      }
+      else if (changeData().cur == -1) {
+        setScore(props.score)
+      }
+    } else {
+      props.onChange?.(score());
+    }
   })
 
   return (
     <div class='text-center font-bold bg-background-blue-light rounded-xl text-lg'>
-      <button class={buttonStyle} onClick={() => setScore(v => v+1)}>
+      <button
+        class={buttonStyle}
+        classList={{ 'text-background-blue-dark': score() > props.score }}
+        onClick={() => {
+          setScore(props.score + 1)
+          setChangeData(prev => ({
+            bef: prev.cur,
+            cur: 1,
+          }))
+        }}
+      >
         <Plus />
       </button>
       {score()}
-      <button class={buttonStyle} onClick={() => setScore(v => v+1)}>
+      <button
+        class={buttonStyle}
+        classList={{ 'text-background-blue-dark': score() < props.score }}
+        onClick={() => {
+          setScore(props.score - 1)
+          setChangeData(prev => ({
+            bef: prev.cur,
+            cur: -1,
+          }))
+        }}
+      >
         <Minus />
       </button>
     </div>
