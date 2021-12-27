@@ -33,8 +33,7 @@ const ScoreCount = (props: ScoreCountProps) => {
   return (
     <div class='text-center font-bold bg-background-blue-light rounded-xl text-lg'>
       <button
-        class={buttonStyle}
-        classList={{ 'text-background-blue-dark': score() > props.score }}
+        class={`${buttonStyle} ${score() > props.score ? 'text-background-blue-dark' : ''}`}
         onClick={() => {
           setScore(props.score + 1)
           setChangeData(prev => ({
@@ -47,8 +46,7 @@ const ScoreCount = (props: ScoreCountProps) => {
       </button>
       {score()}
       <button
-        class={buttonStyle}
-        classList={{ 'text-background-blue-dark': score() < props.score }}
+        class={`${buttonStyle} ${score() < props.score ? 'text-background-blue-dark' : ''}`}
         onClick={() => {
           setScore(props.score - 1)
           setChangeData(prev => ({

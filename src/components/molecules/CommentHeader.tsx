@@ -14,8 +14,8 @@ const CommentHeader = (props: CommentHeaderProps) => {
 
 
   return (
-    <h1 class='flex items-center gap-6 text-2xl w-full'>
-      <img src={props.image} alt="user image"/>
+    <h1 class='flex items-center gap-6 text-xl w-full'>
+      <img src={props.image} alt="user image" class='h-12'/>
       <p class='font-bold'>{props.nick}</p>
       <Show when={props.you}>
         <p class='text-xl bg-main-blue text-white px-2 pb-1 rounded'>you</p>
